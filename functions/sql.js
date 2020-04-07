@@ -1,4 +1,23 @@
+// --------------------------------------------------------------
+// Required Dependencies
+// --------------------------------------------------------------
+const connection = require("../connection");
+
+
+
+class DB {
+    constructor(connection) {
+        this.connection = connection;
+    }
 // Add department
+     viewDepartments() {
+    console.log("Now viewing all departments...");
+    return this.connection.query(
+        "SELECT * FROM department"
+        );
+    }
+}
+
 
 // Add role
 
@@ -24,3 +43,7 @@
     // Delete employees
 
     // View total budget by department
+
+
+
+module.exports = new DB(connection);

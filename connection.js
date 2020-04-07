@@ -2,13 +2,7 @@
 // Required Dependencies
 // --------------------------------------------------------------
 const mysql = require("mysql");
-const inquirer = require("inquirer");
-const cTable = require('console.table');
-
-// --------------------------------------------------------------
-// Load Data
-// --------------------------------------------------------------
-const CliMenu = require("./functions/cli.js");
+const util = require("util");
 
 // --------------------------------------------------------------
 // Connect to SQL Server
@@ -24,5 +18,13 @@ const connection = mysql.createConnection({
 connection.connect(function(err) {
     if (err) throw err;
     console.log(`connected as id${connection.threadId}\n`);
-    CliMenu.start();
 })
+
+// connection.connect();
+
+// promisfy the connection
+
+connection.query = util.promisify(connection.query);
+
+
+module.exports = connection;
