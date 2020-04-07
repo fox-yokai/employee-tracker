@@ -29,9 +29,10 @@ function startCli() {
                     DB.viewDepartments()
                     .then(function (res){
                     console.table(res);
-                    });
-                   
-                    // startCli();
+                    })
+                    .then(function() {
+                        startCli();
+                    })
                     break
                     
                 case "View roles":
