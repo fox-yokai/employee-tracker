@@ -11,17 +11,24 @@ class DB {
     }
 // Add department
      viewDepartments() {
-    console.log("Now viewing all departments...");
+    console.log("Now viewing all departments...\n");
     return this.connection.query(
         "SELECT * FROM department"
         );
     };
 
     viewRoles() {
-        console.log("Now viewing all roles...");
+        console.log("Now viewing all roles...\n");
         return this.connection.query(
             "SELECT * FROM role LEFT JOIN department ON role.department_id = department.id"
         );
+    };
+
+    viewEmployees() {
+        console.log("Now viewing all employees...\n");
+        return this.connection.query(
+            "SELECT * FROM employee LEFT JOIN role ON employee.role_id = role.id"
+        )
     }
 }
 
