@@ -15,6 +15,13 @@ class DB {
     return this.connection.query(
         "SELECT * FROM department"
         );
+    };
+
+    viewRoles() {
+        console.log("Now viewing all roles...");
+        return this.connection.query(
+            "SELECT * FROM role LEFT JOIN department ON role.department_id = department.id"
+        );
     }
 }
 

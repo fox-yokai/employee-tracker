@@ -28,6 +28,7 @@ function startCli() {
                 case "View departments":
                     DB.viewDepartments()
                     .then(function (res){
+                    console.log("\n");
                     console.table(res);
                     })
                     .then(function() {
@@ -36,8 +37,16 @@ function startCli() {
                     break
                     
                 case "View roles":
-                    console.log("View roles selected");
-                    break
+                    case "View departments":
+                        DB.viewRoles()
+                        .then(function (res){
+                        console.log("\n");
+                        console.table(res);
+                        })
+                        .then(function() {
+                            startCli();
+                        })
+                        break
                 
                 case "Add department":
                     console.log("Add department selected");
