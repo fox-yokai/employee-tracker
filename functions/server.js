@@ -57,7 +57,10 @@ function startCli() {
                     break
                 
                 case "Add department":
-                    console.log("Add department selected");
+                    DB.addDepartment()
+                    .then(function (res){ // TODO: getting TypeError: Cannot read property 'then of undefined
+                        startCli();
+                    })
                     break
                         
                 case "Add role":

@@ -2,6 +2,7 @@
 // Required Dependencies
 // --------------------------------------------------------------
 const connection = require("../connection");
+const inquirer = require("inquirer");
 
 
 
@@ -9,7 +10,6 @@ class DB {
     constructor(connection) {
         this.connection = connection;
     }
-// Add department
      viewDepartments() {
     console.log("Now viewing all departments...\n");
     return this.connection.query(
@@ -30,18 +30,45 @@ class DB {
             "SELECT * FROM employee LEFT JOIN role ON employee.role_id = role.id"
         )
     }
+
+    addDepartment() {
+        inquirer
+            .prompt([
+                {
+                type: "input",
+                message: "What is the name of the department?",
+                name: "deptName"
+                },
+                {
+                type: "input",
+                message: "Enter the department ID number",
+                name: "deptID",
+                validate: function(deptID) {
+                    let pass = deptID.match(/^[0-9]*$/);
+                    if (pass) {
+                        return true;
+                    } else {
+                        return "Please enter a valid department ID number";
+                    }
+                    }
+                },
+            ]).then(function ({ deptName, deptID }) {
+               return this.connection.query(
+                    "INSERT INTO department (id, name) SET ?", ('deptId', 'deptName'), function (err, result) {
+                        if (err) throw err;
+                    }
+                )
+            }).catch((error) => {
+                assert.isNotOk(error,'Promise error');
+                done();
+            });
+    }
 }
 
 
 // Add role
 
 // Add employee
-
-// View department
-
-// View roles
-
-// View employees
 
 // Update employee role
 
