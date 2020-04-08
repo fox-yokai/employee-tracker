@@ -4,6 +4,10 @@
 const inquirer = require("inquirer");
 const DB = require("./sql");
 
+// --------------------------------------------------------------
+// This is the command line interface function
+// --------------------------------------------------------------
+
 function startCli() {
     inquirer
         .prompt([
@@ -18,7 +22,7 @@ function startCli() {
                     "Add department",
                     "Add role",
                     "Add employee",
-                    "Update employee roles",
+                    "Update employee information",
                     "Exit the program" 
                 ]
             }
@@ -65,19 +69,24 @@ function startCli() {
                         
                 case "Add role":
                     DB.addRole()
-                //     .then(function (){ // TODO: getting TypeError: Cannot read property 'then of undefined
-                // }).catch(function (err) {
-                //     startCli();
-                //     console.log(err);
-                //   });
+                    .then(function (){
+                        startCli();
+                    })
                     break
             
                 case "Add employee":
-                    DB.addEmployee();
+                    DB.addEmployee()
+                    .then(function (){
+                        startCli();
+                    })
                     break
                 
-                case "Update employee roles":
-                    console.log("Update employee roles selected");
+                case "Update employee information":
+                    DB.updateEmployeeInfo()
+                    .then(function (){
+                        console.log("Employee infomation updated!\n")
+                        startCli();
+                    })
                     break
                         
                 case "Exit the program":

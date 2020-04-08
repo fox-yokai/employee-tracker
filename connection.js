@@ -20,11 +20,6 @@ connection.connect(function(err) {
     console.log(`connected as id${connection.threadId}\n`);
 })
 
-// connection.connect();
-
-// promisfy the connection
-
 connection.query = util.promisify(connection.query);
-
 
 module.exports = connection;
