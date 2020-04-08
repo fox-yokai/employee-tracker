@@ -58,11 +58,9 @@ function startCli() {
                 
                 case "Add department":
                     DB.addDepartment()
-                    // .then(function (){ // TODO: getting TypeError: Cannot read property 'then of undefined
-                    // }).catch(function (err) {
-                    //     startCli();
-                    //     console.log(err);
-                    //   });
+                    .then(function (){
+                        startCli();
+                    })
                     break
                         
                 case "Add role":
@@ -75,7 +73,7 @@ function startCli() {
                     break
             
                 case "Add employee":
-                    console.log("Add employee selected");
+                    DB.addEmployee();
                     break
                 
                 case "Update employee roles":

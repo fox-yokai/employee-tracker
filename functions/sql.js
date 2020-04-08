@@ -32,7 +32,7 @@ class DB {
     };
 
     addDepartment() {
-        inquirer
+        return inquirer
             .prompt([
                 {
                 type: "input",
@@ -53,7 +53,7 @@ class DB {
                     }
                 },
             ]).then(function ({ deptName, deptID }) {
-                connection.query(
+               connection.query(
                     "INSERT INTO department SET ?", 
                     {
                         id: deptID,
@@ -66,7 +66,7 @@ class DB {
     };
 
     addRole() {
-        inquirer
+        return inquirer
         .prompt([
             {
             type: "input",
@@ -127,9 +127,61 @@ class DB {
         })
     };
     
+    addEmployee() {
+        return inquirer
+        .prompt([
+            {
+            type: "input",
+            message: "Enter the user's first name",
+            name: "first_name",
+            },
+            {
+            type: "input",
+            message: "Enter the user's last name",
+            name: "last_name",
+            },
+            {
+            type: "input",
+            message: "Enter the user's role ID",
+            name: "role_id",
+            validate: function(roleSalary) {
+                let pass = roleSalary.match(/^[0-9]*$/);
+                if (pass) {
+                    return true;
+                } else {
+                    return "Please enter a valid number";
+                }
+                }
+            },
+            {
+            type: "input",
+            message: "Enter the user's manager ID number",
+            name: "manager_id",
+            validate: function(manager_id) {
+                let pass = manager_id.match(/^[0-9]*$/);
+                if (pass) {
+                    return true;
+                } else {
+                    return "Please enter a valid department ID number";
+                }
+                }
+            }
+        ]).then(function ({ first_name, last_name, role_id, manager_id }) {
+            connection.query(
+                "INSERT INTO employee SET ?", 
+                {
+                    first_name: first_name,
+                    last_name: last_name,
+                    role_id: role_id,
+                    manager_id: manager_id
+                },
+                 function (err, res) {
+                    if (err) throw err;
+                 })
+        })
+    };
 }
 
-// Add employee
 
 // Update employee role
 
