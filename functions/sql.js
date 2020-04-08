@@ -29,7 +29,7 @@ class DB {
         return this.connection.query(
             "SELECT * FROM employee LEFT JOIN role ON employee.role_id = role.id"
         )
-    }
+    };
 
     addDepartment() {
         inquirer
@@ -53,20 +53,81 @@ class DB {
                     }
                 },
             ]).then(function ({ deptName, deptID }) {
-               return this.connection.query(
-                    "INSERT INTO department (id, name) SET ?", ('deptId', 'deptName'), function (err, result) {
+                connection.query(
+                    "INSERT INTO department SET ?", 
+                    {
+                        id: deptID,
+                        name: deptName
+                    },
+                     function (err, res) {
                         if (err) throw err;
-                    }
-                )
-            }).catch((error) => {
-                assert.isNotOk(error,'Promise error');
-                done();
+                     })
             });
-    }
+    };
+
+    addRole() {
+        inquirer
+        .prompt([
+            {
+            type: "input",
+            message: "Enter the ID number of the role",
+            name: "roleID",
+            validate: function(roleID) {
+                let pass = roleID.match(/^[0-9]*$/);
+                if (pass) {
+                    return true;
+                } else {
+                    return "Please enter a valid role ID number";
+                }
+                }
+            },
+            {
+            type: "input",
+            message: "Enter the title of the role",
+            name: "roleTitle",
+            },
+            {
+            type: "input",
+            message: "Enter the salary",
+            name: "roleSalary",
+            validate: function(roleSalary) {
+                let pass = roleSalary.match(/^[0-9]*$/);
+                if (pass) {
+                    return true;
+                } else {
+                    return "Please enter a valid number";
+                }
+                }
+            },
+            {
+            type: "input",
+            message: "Enter the Department ID number",
+            name: "deptID",
+            validate: function(deptID) {
+                let pass = deptID.match(/^[0-9]*$/);
+                if (pass) {
+                    return true;
+                } else {
+                    return "Please enter a valid department ID number";
+                }
+                }
+            }
+        ]).then(function ({ roleID, roleTitle, roleSalary, deptID }) {
+            connection.query(
+                "INSERT INTO role SET ?", 
+                {
+                    id: roleID,
+                    title: roleTitle,
+                    salary: roleSalary,
+                    department_id: deptID
+                },
+                 function (err, res) {
+                    if (err) throw err;
+                 })
+        })
+    };
+    
 }
-
-
-// Add role
 
 // Add employee
 
